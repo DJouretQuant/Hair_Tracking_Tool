@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scalp Image Upload</title>
+</head>
+<body>
+    <h1>Upload Scalp Image</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="region">Region:</label>
+        <select name="region" required>
+            <option value="vertex">Vertex</option>
+            <option value="frontal">Frontal</option>
+            <option value="occipital">Occipital</option>
+        </select>
+        <br><br>
+
+        <label for="lighting">Lighting:</label>
+        <select name="lighting" required>
+            <option value="ring_light">Ring Light</option>
+            <option value="daylight">Daylight</option>
+        </select>
+        <br><br>
+
+        <label for="hair_length">Hair length (mm):</label>
+        <input type="number" name="hair_length" min="0" required>
+        <br><br>
+
+        <label for="file">Select image:</label>
+        <input type="file" name="file" accept="image/*" required>
+        <br><br>
+
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin Login</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      .msg { color: green; }
+      .err { color: red; }
+    </style>
+  </head>
+  <body>
+    <h2>Admin Dashboard Login</h2>
+
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% if msgs %}
+        {% for cat, m in msgs %}
+          <div class="{{ 'err' if cat == 'error' else 'msg' }}">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>

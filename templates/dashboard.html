@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <style>
+      table { border-collapse: collapse; width: 100%; }
+      th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+      th { background: #f5f5f5; }
+      img { max-height: 80px; }
+    </style>
+  </head>
+  <body>
+    <h2>Image Dashboard</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date (UTC)</th>
+          <th>Zone</th>
+          <th>Length (mm)</th>
+          <th>Treatment</th>
+          <th>Preview</th>
+          <th>View/Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in files %}
+        <tr>
+          <td>{{ f.date }}</td>
+          <td>{{ f.zone }}</td>
+          <td>{{ f.length_mm }}</td>
+          <td>{{ f.treatment }}</td>
+          <td><img src="{{ f.url }}" alt="preview"></td>
+          <td><a href="{{ f.url }}" target="_blank">Open</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

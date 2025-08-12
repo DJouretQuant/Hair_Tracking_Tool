@@ -45,6 +45,10 @@ def strip_exif(image_stream):
     buf.seek(0)
     return buf
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 # Login route for admin
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -58,7 +62,7 @@ def login():
 
 
 # Upload route for participants
-@app.route("/", methods=["GET", "POST"])
+@app.route("/upload", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
         file = request.files.get("file")
@@ -67,6 +71,33 @@ def upload_file():
         treatment = request.form.get("treatment", "")
 
         if file:
+
+            # Read image into PIL
+            image = Image.open(file.stream)
+            
+            # === TEMPORARY: Extract EXIF if present ===
+            try:
+                exif_data = image._getexif()
+                if exif_data:
+                    readable_exif = {
+                        ExifTags.TAGS.get(tag, tag): value
+                        for tag, value in exif_data.items()
+                    }
+                    print("=== EXIF DATA FROM UPLOAD ===")
+                    for k, v in readable_exif.items():
+                        print(f"{k}: {v}")
+                else:
+                    print("No EXIF data found in uploaded image.")
+            except Exception as e:
+                print("Error reading EXIF:", e)
+
+            # Strip EXIF before saving
+            rgb_image = image.convert("RGB")
+            buf = io.BytesIO()
+            rgb_image.save(buf, format="JPEG")
+            buf.seek(0)
+
+            # Upload to B2
             clean_img = strip_exif(file.stream)
             filename = f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{zone}_{length_mm}mm_{treatment.replace(' ', '-')}.jpg"
             b2.upload_fileobj(clean_img, B2_BUCKET, filename)

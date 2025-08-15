@@ -6,3 +6,6 @@ Hair_Tracking_Tool_Vault
 qrcode_generator.py
 qr_codes/*.png
 static/
+CG_Scalp_Images/
+tmp/
+.venv

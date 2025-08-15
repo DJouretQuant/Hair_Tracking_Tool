@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Preview & Confirm</title></head>
+  <body style="font-family:Arial, sans-serif;">
+    <h2>Preview Anonymization</h2>
+    <p>You will see a semi-transparent red box showing what will be anonymized. The final upload will use a solid black rectangle.</p>
+
+    <div style="text-align:center;">
+      <img src="data:image/jpeg;base64,{{ preview_b64 }}" alt="Anonymized preview"
+           style="max-width: 90%; height:auto; border:1px solid #ccc;">
+    </div>
+
+    <form method="POST" action="{{ url_for('confirm_upload') }}" style="margin-top:20px; text-align:center;">
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" name="length_mm" value="{{ length_mm }}">
+        <input type="hidden" name="zone" value="{{ zone }}">
+        <input type="hidden" name="treatment" value="{{ treatment }}">
+      <button type="submit" style="background:linear-gradient(to right,#6FADE0,#CFE4FA);border:none;color:#000;padding:12px 25px;font-size:16px;cursor:pointer;border-radius:25px;">
+        Confirm & Upload
+      </button>
+    </form>
+
+    <div style="text-align:center; margin-top:10px;">
+      <a href="{{ url_for('upload_file') }}">← Go back and choose another photo</a>
+    </div>
+  </body>
+</html>
+

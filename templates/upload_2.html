@@ -1,23 +1,31 @@
 <!doctype html>
 <html>
-  <head><title>Upload</title></head>
+  <head>
+    <title>Upload</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      label { display: block; margin-top: 10px; }
+      .msg { color: green; }
+      .err { color: red; }
+    </style>
+  </head>
   <body>
     <h2>Upload Image</h2>
 
     {% with msgs = get_flashed_messages(with_categories=true) %}
       {% if msgs %}
         {% for cat, m in msgs %}
-          <div style="color: {{ 'red' if cat=='error' else 'green' }}">{{ m }}</div>
+          <div class="{{ 'err' if cat == 'error' else 'msg' }}">{{ m }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
-    <form method="POST" action="{{ url_for('preview') }}" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
       <label>Image:</label>
-      <input type="file" name="file" accept="image/*" required><br><br>
+      <input type="file" name="file" accept="image/*" required>
 
       <label>Hair/Beard Length (mm):</label>
-      <input type="number" step="0.1" name="length_mm" required><br><br>
+      <input type="number" step="0.1" name="length_mm" required>
 
       <label>Zone:</label>
       <select name="zone" required>
@@ -26,13 +34,13 @@
         <option value="temples">Temples</option>
         <option value="beard">Beard</option>
         <option value="eyebrows">Eyebrows</option>
-      </select><br><br>
+      </select>
 
       <label>Treatment notes (optional):</label>
-      <input type="text" name="treatment"><br><br>
+      <input type="text" name="treatment">
 
-      <button type="submit">Preview anonymization →</button>
+      <br><br>
+      <button type="submit">Upload</button>
     </form>
   </body>
 </html>
-
